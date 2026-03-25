@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-amd64
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-amd64
+  template:
+    metadata:
+      labels:
+        app: demo-amd64
+    spec:
+      tolerations:
+        - key: workload-arch
+          operator: Equal
+          value: amd64
+          effect: NoSchedule
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        workload-arch: amd64
+      containers:
+        - name: nginx
+          image: nginx:stable-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
