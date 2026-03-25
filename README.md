@@ -1,1 +1,0 @@
-# aws.terraform.karpenter.cluster-architecture
